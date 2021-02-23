@@ -1,0 +1,6 @@
+include MANIFEST.in
+include README.md setup.py CHANGELOG AUTHORS LICENSE
+
+recursive-include *.dat
+include pyscf/lib/*.so*
+include pyscf/lib/*.dylib*

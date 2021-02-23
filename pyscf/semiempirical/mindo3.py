@@ -11,6 +11,7 @@ Ref:
 [2] D. F. Lewis, Chem. Rev. 86, 1111 (1986).
 '''
 
+import os
 import copy
 import numpy
 from pyscf import lib
@@ -19,6 +20,7 @@ from pyscf import gto
 from pyscf import scf
 from pyscf.data.elements import _symbol
 from pyscf.semiempirical import mopac_param
+from pyscf.semiempirical.misc import version_tag
 
 
 @lib.with_doc(scf.hf.get_hcore.__doc__)
@@ -48,7 +50,7 @@ def get_hcore(mol):
     hcore *= ao_ip[:,None] + ao_ip
     hcore *= _get_beta0(ao_atom_charges[:,None], ao_atom_charges)
 
-    # U term 
+    # U term
     hcore[numpy.diag_indices(nao)] = _to_ao_labels(mol, basis_u)
 
     # Nuclear attraction
@@ -168,6 +170,17 @@ class RMINDO3(scf.hf.RHF):
         self._mindo_mol = _make_mindo_mol(mol)
         self._keys.update(['e_heat_formation'])
 
+    def dump_flags(self, verbose=None):
+        log = logger.new_logger(mol, verbose)
+        if log.verbose >= logger.INFO:
+            from pyscf import semiemiprical
+            info = lib.repo_info(os.path.join(__file__, '..', '..', '..'))
+            log.info('pyscf-semiemiprical version %s', semiemiprical.__version__)
+            log.info('pyscf-semiemiprical path %s', info['path'])
+            if 'git' in info:
+                log.info(info['git'])
+        return hf.RHF.dump_flags(self, log)
+
     def reset(self, mol=None):
         if mol is not None:
             self.mol = mol
@@ -234,6 +247,17 @@ class UMINDO3(scf.uhf.UHF):
         self.e_heat_formation = None
         self._mindo_mol = _make_mindo_mol(mol)
         self._keys.update(['e_heat_formation'])
+
+    def dump_flags(self, verbose=None):
+        log = logger.new_logger(mol, verbose)
+        if log.verbose >= logger.INFO:
+            from pyscf import semiemiprical
+            info = lib.repo_info(os.path.join(__file__, '..', '..', '..'))
+            log.info('pyscf-semiemiprical version %s', semiemiprical.__version__)
+            log.info('pyscf-semiemiprical path %s', info['path'])
+            if 'git' in info:
+                log.info(info['git'])
+        return uhf.UHF.dump_flags(self, log)
 
     def build(self, mol=None):
         if mol is None: mol = self.mol
