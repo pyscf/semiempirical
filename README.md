@@ -7,7 +7,7 @@ Semiempirical module for PySCF
 
 Install
 -------
-* Install to python site-package folder
+* Install to python site-packages folder
 ```
 pip install https://github.com/pyscf/semiempirical
 ```
@@ -21,4 +21,4 @@ echo 'export PYSCF_EXT_PATH=/home/abc/local/path:$PYSCF_EXT_PATH' >> ~/.bashrc
 ```
 
 You can find more details of extended modules in the document
-[extended modules](http://pyscf.org/pyscf/install.html#extended-modules)
+[extension modules](http://pyscf.org/pyscf/install.html#extension-modules)

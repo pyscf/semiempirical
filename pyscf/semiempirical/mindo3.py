@@ -20,7 +20,6 @@ from pyscf import gto
 from pyscf import scf
 from pyscf.data.elements import _symbol
 from pyscf.semiempirical import mopac_param
-from pyscf.semiempirical.misc import version_tag
 
 
 @lib.with_doc(scf.hf.get_hcore.__doc__)

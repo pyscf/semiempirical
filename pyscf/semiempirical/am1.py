@@ -698,6 +698,3 @@ if __name__ == '__main__':
     mol = gto.M(atom=[(8,(0,0,0)),(1,(1.,0,0))], spin=1)
     mf = UAM1(mol).run(conv_tol=1e-6)
     print(mf.e_heat_formation)
-
-
-
