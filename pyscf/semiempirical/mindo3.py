@@ -170,7 +170,7 @@ class RMINDO3(scf.hf.RHF):
         self._keys.update(['e_heat_formation'])
 
     def dump_flags(self, verbose=None):
-        log = logger.new_logger(mol, verbose)
+        log = logger.new_logger(self, verbose)
         if log.verbose >= logger.INFO:
             from pyscf import semiemiprical
             info = lib.repo_info(os.path.join(__file__, '..', '..', '..'))
@@ -178,7 +178,7 @@ class RMINDO3(scf.hf.RHF):
             log.info('pyscf-semiemiprical path %s', info['path'])
             if 'git' in info:
                 log.info(info['git'])
-        return hf.RHF.dump_flags(self, log)
+        return super().dump_flags(log)
 
     def reset(self, mol=None):
         if mol is not None:
@@ -248,7 +248,7 @@ class UMINDO3(scf.uhf.UHF):
         self._keys.update(['e_heat_formation'])
 
     def dump_flags(self, verbose=None):
-        log = logger.new_logger(mol, verbose)
+        log = logger.new_logger(self, verbose)
         if log.verbose >= logger.INFO:
             from pyscf import semiemiprical
             info = lib.repo_info(os.path.join(__file__, '..', '..', '..'))
@@ -256,7 +256,7 @@ class UMINDO3(scf.uhf.UHF):
             log.info('pyscf-semiemiprical path %s', info['path'])
             if 'git' in info:
                 log.info(info['git'])
-        return uhf.UHF.dump_flags(self, log)
+        return super().dump_flags(log)
 
     def build(self, mol=None):
         if mol is None: mol = self.mol
@@ -408,18 +408,3 @@ def _get_reference_energy(mol):
     Hf =  mopac_param.EHEAT3[atom_charges].sum()
     Eat = mopac_param.EISOL3[atom_charges].sum()
     return Hf - Eat * mopac_param.EV2KCAL
-
-
-if __name__ == '__main__':
-    mol = gto.M(atom=[(8,(0,0,0)),(1,(1.,0,0)),(1,(0,1.,0))])
-    mf = RMINDO3(mol).run(conv_tol=1e-6)
-    print(mf.e_heat_formation - -48.82621264564841)
-
-    mol = gto.M(atom=[(8,(0,0,0)),(1,(1.,0,0))], spin=1)
-    mf = UMINDO3(mol).run(conv_tol=1e-6)
-    print(mf.e_heat_formation - 18.08247965492137)
-
-    mol = gto.M(atom=[(6,(0,0,0)),(1,(1.,0,0)),(1,(0,1.,0)),
-                      (1,(0,0,1.)),(1,(0,0,-1.))])
-    mf = RMINDO3(mol).run(conv_tol=1e-6)
-    print(mf.e_heat_formation - 75.76019731515225)

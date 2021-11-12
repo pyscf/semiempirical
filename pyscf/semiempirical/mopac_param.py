@@ -1,3 +1,4 @@
+# flake8: noqa
 #
 # Modified based on MINDO3_Parameters.py and Slater.py in PyQuante-1.6
 #
@@ -48,7 +49,7 @@ UPP3 *= 1./HARTREE2EV
 #     GSP ::= (SS,PP)
 #     GP2 ::= (PP,P*P*)
 #     HSP ::= (SP,SP)
-GSSM = numpy.array((
+GSSM = numpy.array((  # noqa: E131
         0.  , 12.848, 0.  ,
         0.  , 9.00, 10.59, 12.23, 13.59, 15.42, 16.92, 0.  ,
         0.  , 0.  , 8.09, 9.82, 11.56, 12.88, 15.03, 0.  ,
