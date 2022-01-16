@@ -5,6 +5,7 @@ AUTHOR       = 'Qiming Sun'
 AUTHOR_EMAIL = 'osirpt.sun@gmail.com'
 DESCRIPTION  = 'Semi-empirical methods for PySCF'
 #VERSION = '0.0.0'
+SO_EXTENSIONS = {'pyscf.lib.libsemiempirical': ['pyscf/semiempirical/repp.c', 'pyscf/semiempirical/rotate.c']}
 DEPENDENCIES = ['pyscf', 'numpy']
 
 #######################################################################
@@ -13,6 +14,7 @@ metadata = globals()
 import os
 import sys
 from setuptools import setup, find_namespace_packages, Extension
+from setuptools.command.build_ext import build_ext
 
 topdir = os.path.abspath(os.path.join(__file__, '..'))
 modules = find_namespace_packages(include=['pyscf.*'])
@@ -59,6 +61,14 @@ def make_ext(pkg_name, srcs,
                      runtime_library_dirs = runtime_library_dirs,
                      **kwargs)
 
+class BuildExtWithoutPlatformSuffix(build_ext):
+    def get_ext_filename(self, ext_name):
+        from distutils.sysconfig import get_config_var
+        ext_path = ext_name.split('.')
+        filename = build_ext.get_ext_filename(self, ext_name)
+        name, ext_suffix = os.path.splitext(filename)
+        return os.path.join(*ext_path) + ext_suffix
+
 settings = {
     'name': metadata.get('NAME', None),
     'version': VERSION,
@@ -66,6 +76,7 @@ settings = {
     'author': metadata.get('AUTHOR', None),
     'author_email': metadata.get('AUTHOR_EMAIL', None),
     'install_requires': metadata.get('DEPENDENCIES', []),
+    'cmdclass': {"build_ext": BuildExtWithoutPlatformSuffix,},
 }
 if 'SO_EXTENSIONS' in metadata:
     settings['ext_modules'] = [make_ext(k, v) for k, v in SO_EXTENSIONS.items()]
