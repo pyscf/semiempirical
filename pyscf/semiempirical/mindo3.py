@@ -172,7 +172,7 @@ class RMINDO3(scf.hf.RHF):
     def dump_flags(self, verbose=None):
         log = logger.new_logger(self, verbose)
         if log.verbose >= logger.INFO:
-            from pyscf import semiemiprical
+            from pyscf import semiempirical
             info = lib.repo_info(os.path.join(__file__, '..', '..', '..'))
             log.info('pyscf-semiemiprical version %s', semiemiprical.__version__)
             log.info('pyscf-semiemiprical path %s', info['path'])
@@ -250,7 +250,7 @@ class UMINDO3(scf.uhf.UHF):
     def dump_flags(self, verbose=None):
         log = logger.new_logger(self, verbose)
         if log.verbose >= logger.INFO:
-            from pyscf import semiemiprical
+            from pyscf import semiempirical
             info = lib.repo_info(os.path.join(__file__, '..', '..', '..'))
             log.info('pyscf-semiemiprical version %s', semiemiprical.__version__)
             log.info('pyscf-semiemiprical path %s', info['path'])
