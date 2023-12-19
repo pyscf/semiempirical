@@ -24,7 +24,7 @@ from pyscf.semiempirical import mopac_param
 
 @lib.with_doc(scf.hf.get_hcore.__doc__)
 def get_hcore(mol):
-    assert(not mol.has_ecp())
+    assert not mol.has_ecp()
     nao = mol.nao
 
     atom_charges = mol.atom_charges()
@@ -313,7 +313,7 @@ class UMINDO3(scf.uhf.UHF):
 
 
 def _make_mindo_mol(mol):
-    assert(not mol.has_ecp())
+    assert not mol.has_ecp()
     def make_sto_6g(n, l, zeta):
         es = mopac_param.gexps[(n, l)]
         cs = mopac_param.gcoefs[(n, l)]
