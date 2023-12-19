@@ -1,9 +1,9 @@
 Semiempirical module for PySCF
 ==============================
 
-2021-02-12
+2023-12-19
 
-* Version 0.1
+* Version 0.1.1
 
 Install
 -------
